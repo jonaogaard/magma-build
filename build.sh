@@ -29,3 +29,13 @@ docker-compose build magmalte
 
 # Pushing NMS docker image:
 COMPOSE_PROJECT_NAME=magmalte ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
+
+# Building Federation Gateway docker images:
+cd ${MAGMA_ROOT}/feg/gateway/docker
+docker-compose build --parallel
+
+# Pushing Federation Gateway docker images:
+for image in gateway_python gateway_go
+do
+  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+done
