@@ -7,7 +7,7 @@ git clone https://github.com/magma/magma.git --depth 1
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 REGISTRY=shubhamtatvamasi
-MAGMA_TAG=$(date +%m-%d-%Y-%s)
+MAGMA_TAG=$(date +%m-%d-%Y--%H-%M-%S)
 
 echo "Delete docker login block..."
 sed -i '65,71d' ${PUBLISH}
