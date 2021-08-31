@@ -3,9 +3,9 @@
 echo "Starting Magma Build:"
 git clone https://github.com/magma/magma.git --depth 1
 
+REGISTRY=shubhamtatvamasi
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
-REGISTRY=shubhamtatvamasi
 MAGMA_TAG=$(date +%m-%d-%Y--%H-%M-%S)
 
 echo "Deleting docker login code block:"
