@@ -23,7 +23,7 @@ do
 done
 
 echo "Building NMS docker image..."
-cd ${MAGMA_ROOT}/nms/app/packages/magmalte
+cd ${MAGMA_ROOT}/nms/packages/magmalte
 docker-compose build magmalte
 
 echo "Pushing NMS docker image..."
