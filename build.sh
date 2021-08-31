@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
 echo "Starting Magma Build:"
-git clone https://github.com/magma/magma.git --depth 1
 
+# dockerhub username
 REGISTRY=shubhamtatvamasi
+
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 MAGMA_TAG=$(date +%m-%d-%Y--%H-%M-%S)
+
+echo "Clone magma repo:"
+git clone https://github.com/magma/magma.git --depth 1
 
 echo "Deleting docker login code block:"
 sed -i '65,71d' ${PUBLISH}
