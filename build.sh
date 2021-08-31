@@ -10,7 +10,7 @@ REGISTRY=shubhamtatvamasi
 MAGMA_TAG=$(date +%m-%d-%Y-%s)
 
 echo "Delete docker login block..."
-sed -i '65,71d' $PUBLISH
+sed -i '65,71d' ${PUBLISH}
 
 echo "Building controller and nginx docker images..."
 cd ${MAGMA_ROOT}/orc8r/cloud/docker
