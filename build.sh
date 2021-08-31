@@ -9,11 +9,14 @@ PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 REGISTRY=shubhamtatvamasi
 MAGMA_TAG=$(date +%m-%d-%Y-%s)
 
-echo "Building controller and nginx docker image:"
+echo "Delete docker login block..."
+sed -i '65,71d' $PUBLISH
+
+echo "Building controller and nginx docker image..."
 cd ${MAGMA_ROOT}/orc8r/cloud/docker
 ./build.py --all
 
-echo "Pushing docker images:"
+echo "Pushing docker images..."
 for image in controller nginx
 do
   ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
