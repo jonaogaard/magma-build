@@ -12,12 +12,19 @@ MAGMA_TAG=$(date +%m-%d-%Y-%s)
 echo "Delete docker login block..."
 sed -i '65,71d' $PUBLISH
 
-echo "Building controller and nginx docker image..."
+echo "Building controller and nginx docker images..."
 cd ${MAGMA_ROOT}/orc8r/cloud/docker
 ./build.py --all
 
-echo "Pushing docker images..."
+echo "Pushing controller and nginx docker images..."
 for image in controller nginx
 do
   ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
 done
+
+echo "Building NMS docker image..."
+cd ${MAGMA_ROOT}/nms/app/packages/magmalte
+docker-compose build magmalte
+
+echo "Pushing NMS docker image..."
+COMPOSE_PROJECT_NAME=magmalte ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
