@@ -13,11 +13,11 @@ git clone https://github.com/magma/magma.git --depth 1
 # Deleting docker login code block:
 sed -i '65,71d' ${PUBLISH}
 
-# Building controller and nginx docker images:
+# Building Orchestrator docker images:
 cd ${MAGMA_ROOT}/orc8r/cloud/docker
 ./build.py --all
 
-# Pushing controller and nginx docker images:
+# Pushing Orchestrator docker images:
 for image in controller nginx
 do
   ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
