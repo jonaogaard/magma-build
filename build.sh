@@ -11,5 +11,10 @@ MAGMA_TAG=$(date +%m-%d-%Y-%s)
 
 echo "Building controller and nginx docker image:"
 cd ${MAGMA_ROOT}/orc8r/cloud/docker
-./build.py -a
+./build.py --all
 
+echo "Pushing docker images:"
+for image in controller nginx
+do
+  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+done
