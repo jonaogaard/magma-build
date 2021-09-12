@@ -7,10 +7,12 @@ REGISTRY=shubhamtatvamasi
 
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
-MAGMA_TAG=$(date +%m-%d-%Y--%H-%M-%S)
 
 # Cloning magma repo:
 git clone https://github.com/magma/magma.git --depth 1
+
+cd ${MAGMA_ROOT}
+MAGMA_TAG=$(git rev-parse --short HEAD)--$(date +%m-%d-%Y--%H-%M-%S)
 
 # Deleting docker login code block:
 sed -i '65,71d' ${PUBLISH}
