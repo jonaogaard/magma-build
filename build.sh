@@ -43,3 +43,23 @@ for image in gateway_python gateway_go
 do
   ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
 done
+
+# Building CWF docker images:
+cd ${MAGMA_ROOT}/cwf/gateway/docker
+docker-compose build --parallel
+
+# Pushing CWF docker images:
+for image in cwag_go gateway_pipelined gateway_sessiond
+do
+  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+done
+
+# Building Operator docker image:
+cd ${MAGMA_ROOT}/cwf/k8s/cwf_operator/docker
+docker-compose build
+
+# Pushing Operator docker images:
+for image in operator
+do
+  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+done
