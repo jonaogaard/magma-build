@@ -12,54 +12,71 @@ PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 git clone https://github.com/magma/magma.git --depth 1
 
 cd ${MAGMA_ROOT}
-MAGMA_TAG=$(git rev-parse --short HEAD)--$(date +%m-%d-%Y--%H-%M-%S)
+MAGMA_TAG=$(git rev-parse --short HEAD)
 
 # Deleting docker login code block:
 sed -i '65,71d' ${PUBLISH}
 
-# Building Orchestrator docker images:
-cd ${MAGMA_ROOT}/orc8r/cloud/docker
-./build.py --all
+orc8r() {
 
-# Pushing Orchestrator docker images:
-for image in controller nginx
-do
-  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
-done
+  # Building Orchestrator docker images:
+  cd ${MAGMA_ROOT}/orc8r/cloud/docker
+  ./build.py --all
 
-# Building NMS docker image:
-cd ${MAGMA_ROOT}/nms/packages/magmalte
-docker-compose build magmalte
+  # Pushing Orchestrator docker images:
+  for image in controller nginx
+  do
+    ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+  done
+}
 
-# Pushing NMS docker image:
-COMPOSE_PROJECT_NAME=magmalte ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
+nms() {
 
-# Building Federation Gateway docker images:
-cd ${MAGMA_ROOT}/feg/gateway/docker
-docker-compose build --parallel
+  # Building NMS docker image:
+  cd ${MAGMA_ROOT}/nms/packages/magmalte
+  docker-compose build magmalte
 
-# Pushing Federation Gateway docker images:
-for image in gateway_python gateway_go
-do
-  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
-done
+  # Pushing NMS docker image:
+  COMPOSE_PROJECT_NAME=magmalte ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
+}
 
-# Building CWF docker images:
-cd ${MAGMA_ROOT}/cwf/gateway/docker
-docker-compose build --parallel
+feg() {
 
-# Pushing CWF docker images:
-for image in cwag_go gateway_pipelined gateway_sessiond
-do
-  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
-done
+  # Building Federation Gateway docker images:
+  cd ${MAGMA_ROOT}/feg/gateway/docker
+  docker-compose build --parallel
 
-# Building Operator docker image:
-cd ${MAGMA_ROOT}/cwf/k8s/cwf_operator/docker
-docker-compose build
+  # Pushing Federation Gateway docker images:
+  for image in gateway_python gateway_go
+  do
+    ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+  done  
+}
 
-# Pushing Operator docker images:
-for image in operator
-do
-  ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
-done
+cwf() {
+
+  # Building CWF docker images:
+  cd ${MAGMA_ROOT}/cwf/gateway/docker
+  docker-compose build --parallel
+
+  # Pushing CWF docker images:
+  for image in cwag_go gateway_pipelined gateway_sessiond
+  do
+    ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+  done  
+}
+
+operator() {
+
+  # Building Operator docker image:
+  cd ${MAGMA_ROOT}/cwf/k8s/cwf_operator/docker
+  docker-compose build
+
+  # Pushing Operator docker images:
+  for image in operator
+  do
+    ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+  done
+}
+
+${1}
