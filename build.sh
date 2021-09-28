@@ -5,7 +5,7 @@ set -ex
 # dockerhub username:
 REGISTRY=shubhamtatvamasi
 
-# magma variables
+# magma variables:
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 
