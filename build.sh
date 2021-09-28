@@ -2,9 +2,10 @@
 
 set -ex
 
-# dockerhub username
+# dockerhub username:
 REGISTRY=shubhamtatvamasi
 
+# magma variables
 MAGMA_ROOT=${PWD}/magma
 PUBLISH=${MAGMA_ROOT}/orc8r/tools/docker/publish.sh
 
@@ -72,7 +73,7 @@ operator() {
   cd ${MAGMA_ROOT}/cwf/k8s/cwf_operator/docker
   docker-compose build
 
-  # Pushing Operator docker images:
+  # Pushing Operator docker image:
   for image in operator
   do
     ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
