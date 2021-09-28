@@ -80,4 +80,6 @@ operator() {
   done
 }
 
-${1}
+if ! docker manifest inspect ${REGISTRY}/magmalte:${MAGMA_TAG} &> /dev/null; then
+   ${1}
+fi
