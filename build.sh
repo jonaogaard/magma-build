@@ -16,7 +16,7 @@ cd ${MAGMA_ROOT}
 MAGMA_TAG=$(git rev-parse --short HEAD)
 
 # Deleting docker login code block:
-sed -i '65,71d' ${PUBLISH}
+sed -i '64,73d' ${PUBLISH}
 
 orc8r() {
 
