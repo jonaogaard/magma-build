@@ -80,6 +80,20 @@ operator() {
   done
 }
 
+agw() {
+
+  # Building AGW docker images:
+  cd ${MAGMA_ROOT}/lte/gateway/docker
+  export DOCKER_BUILDKIT=1
+  docker-compose build --parallel
+
+  # Pushing AGW docker images:
+  for image in agw_gateway_python agw_gateway_c
+  do
+    ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
+  done  
+}
+
 if ! docker manifest inspect ${REGISTRY}/magmalte:${MAGMA_TAG} &> /dev/null
 then
   ${1}
