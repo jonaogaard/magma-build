@@ -88,7 +88,7 @@ agw() {
   docker-compose build --parallel
 
   # Pushing AGW docker images:
-  for image in agw_gateway_python agw_gateway_c
+  for image in gateway_python gateway_c
   do
     ${PUBLISH} -r ${REGISTRY} -i ${image} -v ${MAGMA_TAG}
   done  
