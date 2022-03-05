@@ -87,13 +87,12 @@ agw() {
   export DOCKER_BUILDKIT=1
   docker-compose build --parallel
 
-  # Tagging AGW docker images:
-  docker tag agw_gateway_python ${REGISTRY}/agw_gateway_python:${MAGMA_TAG}
-  docker tag agw_gateway_c ${REGISTRY}/agw_gateway_c:${MAGMA_TAG}
-
   # Pushing AGW docker images:
-  docker push ${REGISTRY}/agw_gateway_python:${MAGMA_TAG}
-  docker push ${REGISTRY}/agw_gateway_c:${MAGMA_TAG}
+  for image in agw_gateway_python agw_gateway_c
+  do
+    docker tag ${image} ${REGISTRY}/${image}:${MAGMA_TAG}
+    docker push ${REGISTRY}/${image}:${MAGMA_TAG}
+  done
 }
 
 ${1}
