@@ -35,10 +35,11 @@ nms() {
 
   # Building NMS docker image:
   cd ${MAGMA_ROOT}/nms
+  export COMPOSE_PROJECT_NAME=magmalte
   docker-compose build magmalte
 
   # Pushing NMS docker image:
-  COMPOSE_PROJECT_NAME=magmalte ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
+  ${PUBLISH} -r ${REGISTRY} -i magmalte -v ${MAGMA_TAG}
 }
 
 feg() {
