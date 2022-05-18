@@ -34,7 +34,7 @@ orc8r() {
 nms() {
 
   # Building NMS docker image:
-  cd ${MAGMA_ROOT}/nms/packages/magmalte
+  cd ${MAGMA_ROOT}/nms
   docker-compose build magmalte
 
   # Pushing NMS docker image:
