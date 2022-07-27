@@ -96,6 +96,14 @@ agw() {
   done
 }
 
+dp() {
+
+  # Building Domain Proxy docker images:
+  cd ${MAGMA_ROOT}/dp
+  make _install_skaffold_ci
+  skaffold build --default-repo="${REGISTRY}" --tag="${MAGMA_TAG}" --push --profile=remote-push
+}
+
 ${1}
 
 # if ! docker manifest inspect ${REGISTRY}/magmalte:${MAGMA_TAG} &> /dev/null

@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [orc8r, nms, feg, cwf, operator, agw]
+        build: [orc8r, nms, feg, cwf, operator, agw, dp]
     steps:
     - uses: actions/checkout@v3
     - uses: docker/login-action@v1 
