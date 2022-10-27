@@ -3,7 +3,7 @@
 set -ex
 
 # dockerhub username:
-REGISTRY=shubhamtatvamasi
+REGISTRY=jonaoegaard
 
 # magma variables:
 MAGMA_ROOT=${PWD}/magma
